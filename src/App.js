@@ -1,25 +1,25 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import Modal from './components/modal';
+import GameStatus from './components/gameStatus';
+import Board from './components/board';
+
+import footer from './img/footer.svg';
+import cloud from './img/cloud.svg';
 import './App.css';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div id='appContainer'>
+        <Modal />
+        <GameStatus />
+        <Board />
+
+        <button className='restart' onClick={()=> { console.log('restart'); }}>Restart Game</button>
+
+        <footer><img src={footer} alt="grass"/></footer>
+        <img id='cloud1' src={cloud} alt="cloud" />
+        <img id='cloud2' src={cloud} alt="cloud"/>
       </div>
     );
   }

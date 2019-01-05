@@ -1,14 +1,394 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Lobster', cursive;
+  background: linear-gradient(to bottom, #a9e3e3 0%, #d9f2f2 100%);
+  color: #fff;
+  text-shadow: 0px 0px 5px #000;
+  overflow-x: hidden;
+  min-height: 100vh;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+h1 {
+  font-size: 2.5em;
+}
+
+#appContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+#explorerContainer {
+  flex: 4;
+  background: yellow;
+  border-left: 2px solid black;
+  padding: 20px;
+}
+
+#explorerContainer textarea {
+  font-family: monospace;
+  width: 100%;
+  height: 600px;
+  font-size: 16px;
+}
+
+#gameContainer {
+  flex: 6;
+}
+
+.feedback {
+  text-align: center;
+  height: 10px;
+}
+
+.feedback h2 {
+  display: inline-block;
+  margin-right: 20px;
+}
+
+
+.board {
+  background: #3f51b5;
+  border: solid 10px #303f9f;
+  border-right-color: #5C6BC0;
+  border-left-color: #5C6BC0;
+  box-shadow: 0 0 30px #458282;
+  display: flex;
+  box-sizing: border-box;
+  height: 420px;
+  width: 530px;
+  margin: 3.5vw auto;
+  padding: 10px;
+  z-index: 10;
+}
+
+.piece {
+  height: 50px;
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius:50%;
+  background: #a9e3e3;
+  margin: 10px;
+}
+
+.circle {
+  background: transparent;
+  height: 92%;
+  width: 100%;
+  border-radius:50%;
+}
+
+.red {
+  height: 92%;
+  width: 100%;
+  border-radius:50%;
+  border: 2px solid #e44437;
+  background: #4679BD;
+  box-shadow: 0 0 3px gray;
+  background: linear-gradient(to bottom, #991e1e 0%, #e51616 100%); /* W3C */
+  animation-iteration-count: 1;
+  animation-name: move-piece;
+  animation-duration: .3s;
+}
+
+.yellow {
+  height: 92%;
+  width: 100%;
+  border-radius:50%;
+  border: 2px solid #FFF59D;
+  background: #4679BD;
+  box-shadow: 0 0 3px gray;
+  background: linear-gradient(to bottom, #FBC02D 0%, #f2e78a 100%);
+  animation-iteration-count: 1;
+  animation-name: move-piece;
+  animation-duration: .3s;
+}
+
+
+.red.winner {
+  border-color: white;
+  box-shadow: 0 0 20px white;
+  transition: all .5s;
+}
+
+.yellow.winner {
+  border-color: white;
+  box-shadow: 0 0 20px white;
+  transition: all .5s;
+}
+
+.column {
+  flex: 1;
+  height: 100%;
+}
+
+.column:hover {
+  opacity: 0.7;
+}
+
+
+.scoreboard {
+  width: 180px;
+  margin-left: 30px;
+  border: solid 5px #ffeb3b;
+  background: #ffffce;
+  border-radius: 10px;
+  padding: 20px;
+  text-shadow: none;
+  text-align: center;
+  font-weight:bold;
+  color: #dcc70f;
+  word-break: break-all;
+
+  border: solid 10px #dcc70f;
+  border-radius: 80px/150px;
+  box-shadow: 0 0 15px #458282;
+}
+
+.scoreboard:first-child {
+  border-color: #e51616;
+  background: #ffc8c4;
+  color: #e51616;
+  margin-left: 0px;
+}
+
+.modal {
+  width: 400px;
+  text-align: center;
+  padding: 30px;
+  border: solid 20px #d8ab75;
+  border-radius: 120px/200px;
+  box-shadow: 0 0 15px #000, #482c0a 0 0 15px inset;
+  background: #f4e2a7;
+  z-index: 200;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.modal input {
+  display: inline-block;
+  width: 90%;
+  margin: 10px;
+  border: none;
+  border-bottom: solid 1px #d8ab75;
+  outline: none;
+  transition: all 0.3s;
+  background: transparent;
+}
+
+.modal input:focus.red-input {
+  border-color: #991e1e;
+}
+.modal input:focus.yellow-input {
+  border-color: #FBC02D;
+}
+
+.modal .btn-start {
+  border-radius: 50%;
+  background: #62dd5a;
+  height: 100px;
+  width: 100px;
+  font-size: 3em;
+  text-shadow: 0px 0px 7px #188613;
+  color: #fff;
+  border: 10px solid #fff;
+  box-shadow: 0 0 5px #d8ab75, #188613 0 0 20px inset;
+  margin-bottom: 0;
+}
+
+.modal .btn-start:hover {
+  transform: scale(1.1);
+}
+
+/*.active .modal-back {
+  transform: scale(1);
+  opacity: 1;
+  pointer-events: auto; }
+.active .modal {
+  transform: scale(1);
+  opacity: 1;
+  pointer-events: auto; }
+.modal-back, .modal {
+  transition: all 0.25s ease; }*/
+
+
+button {
+  border-radius: 20px;
+  background: #62dd5a;
+  height: 80px;
+  width: 150px;
+  font-size: 1em;
+  text-shadow: 0px 0px 7px #188613;
+  color: #fff;
+  border: 10px solid #fff;
+  box-shadow: 0 0 15px #458282, #188613 0 0 20px inset;
+  margin-bottom: 0;
+  transition: all 0.3s;
+  z-index: 10;
+}
+
+button:hover {
+  transform: scale(1.1);
+}
+
+.modal-back {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+}
+
+.main-wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px;
+  z-index: 100;
+}
+
+.play-again {
+  display: fixed;
+}
+
+.restart {
+  width: 180px;
+  margin: 0 auto;
+}
+
+footer {
+  position: fixed;
+  bottom: -5px;
+  right: 0px;
+  left: -5px;
+  z-index: 0;
+}
+
+footer img {
+  width: 100%;
+}
+
+#cloud1 {
+  width: 10vw;
+  position: absolute;
+  top: 50px;
+  left: -200px;
+  opacity: 0.5;
+  z-index: -1;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-name: move-cloud1;
+  animation-duration: 80s;
+}
+
+@keyframes move-cloud1 {
+    from {left: -200px;}
+    to {left: calc(100vw + 10vw);}
+}
+
+#cloud2 {
+  width: 15vw;
+  position: absolute;
+  top: 170px;
+  right: -250px;
+  opacity: 0.5;
+  z-index: -1;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-name: move-cloud2;
+  animation-duration: 60s;
+}
+
+@keyframes move-cloud2 {
+    from {right: -250px;}
+    to {right: calc(100vw + 15vw);}
+}
+
+@keyframes move-piece {
+    from {transform: translateY(-500px);}
+    to {transform: translateY(0px);
+  }
+}
+
+@media (max-width: 800px) {
+  .feedback {
+    height: 170px;
+  }
+}
+
+@media (max-width: 550px) {
+
+  .board {
+    height: 350px;
+    width: 400px;
+    margin: 5vw auto;
+    padding: 10px;
+  }
+  .piece {
+    height: 40px;
+    width: 40px;
+    margin: 10px 5px;
+  }
+
+}
+
+@media (max-width: 414px) {
+  h1 {
+    font-size: 2em;
+    margin: 5px;
+  }
+
+  .board {
+    height: 250px;
+    width: 290px;
+    margin: 5vw auto;
+    padding: 10px;
+  }
+
+  .feedback {
+    height: 130px;
+  }
+
+  .scoreboard {
+    width: 100px;
+    height: 40px;
+    padding: 5px;
+    border-width: 5px;
+  }
+  .piece {
+    height: 25px;
+    width: 25px;
+    margin: 10px 5px;
+  }
+
+  .modal {
+    width: 200px;
+  }
+
+  .modal .btn-start {
+    height: 75px;
+    width: 75px;
+    font-size: 2em;
+  }
+
+  button {
+    border-radius: 15px;
+    height: 55px;
+    width: 120px;
+    font-size: 1em;
+    border: 7px solid #fff;
+  }
+
+  #cloud1 {
+    width: 10vw;
+  }
+
+  #cloud2 {
+    width: 20vw;
+  }
 }
