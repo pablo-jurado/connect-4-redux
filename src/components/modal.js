@@ -1,14 +1,18 @@
 import React from 'react';
+import { updateUsersNames } from '../actions';
+import { connect } from 'react-redux';
 
-class Modal extends React.Component {
-
+class ModalComponent extends React.Component {
+  constructor(props) {
+    super()
+  }
   state = {
     player1: 'red',
     player2: 'yellow',
   }
 
   handleClick = () => {
-    console.log(this.state);
+    this.props.handleClick(this.state);
   }
 
   handleInput = (event) => {
@@ -18,6 +22,7 @@ class Modal extends React.Component {
   }
 
   render () {
+    if (!this.props.isModalOpen) return null;
     return (
       <div className='parent-modal' >
         <div className='modal'>
@@ -32,5 +37,20 @@ class Modal extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    isModalOpen: state.isModalOpen
+  }
+}
+
+const mapDispatchToProps = dispatch => ({
+  handleClick: (users) => dispatch(updateUsersNames(users))
+})
+
+const Modal = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ModalComponent)
 
 export default Modal;
