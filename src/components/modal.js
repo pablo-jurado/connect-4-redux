@@ -2,7 +2,7 @@ import React from 'react';
 import { updateUsersNames } from '../actions';
 import { connect } from 'react-redux';
 
-class ModalComponent extends React.Component {
+class Modal extends React.Component {
   constructor(props) {
     super()
   }
@@ -48,9 +48,7 @@ const mapDispatchToProps = dispatch => ({
   handleClick: (users) => dispatch(updateUsersNames(users))
 })
 
-const Modal = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ModalComponent)
-
-export default Modal;
+)(Modal);
