@@ -1,4 +1,5 @@
 import { UPDATE_USERS_NAMES, UPDATE_ROW } from '../actions';
+import { gameStatus } from '../gameLogic';
 
 function createEmptyBoard() {
   let board = [];
@@ -41,6 +42,7 @@ const initialState = {
     name: null,
     score: null,
   },
+  status: 'in_progress',
   winnerPosition: null,
   turn: 'r',
   isGameOver: null,
@@ -68,13 +70,15 @@ const rootReducer = (state = initialState, action) => {
       let rowIndex = action.row;
       let row = state.board[rowIndex];
 
-      if (isRowAvailable(row)) {
+      if (isRowAvailable(row) && state.status === 'in_progress') {
         let newRow = addPieceToRow(row, state.turn);
         let newBoard = state.board.slice(0);
         newBoard[rowIndex] = newRow;
         return Object.assign({}, state, {
           board: newBoard,
-          turn: switchTurn(state.turn)
+          turn: switchTurn(state.turn),
+          status: gameStatus(state.board).status,
+          winnerPosition: gameStatus(state.board).position
         });
       } else {
         return state;
