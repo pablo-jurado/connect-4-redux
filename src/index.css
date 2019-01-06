@@ -1,7 +1,7 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Lobster', cursive;
+  font-family: "Lobster", cursive;
   background: linear-gradient(to bottom, #a9e3e3 0%, #d9f2f2 100%);
   color: #fff;
   text-shadow: 0px 0px 5px #000;
@@ -46,12 +46,11 @@ h1 {
   margin-right: 20px;
 }
 
-
 .board {
   background: #3f51b5;
   border: solid 10px #303f9f;
-  border-right-color: #5C6BC0;
-  border-left-color: #5C6BC0;
+  border-right-color: #5c6bc0;
+  border-left-color: #5c6bc0;
   box-shadow: 0 0 30px #458282;
   display: flex;
   box-sizing: border-box;
@@ -68,7 +67,7 @@ h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius:50%;
+  border-radius: 50%;
   background: #a9e3e3;
   margin: 10px;
 }
@@ -77,46 +76,45 @@ h1 {
   background: transparent;
   height: 92%;
   width: 100%;
-  border-radius:50%;
+  border-radius: 50%;
 }
 
 .red {
   height: 92%;
   width: 100%;
-  border-radius:50%;
+  border-radius: 50%;
   border: 2px solid #e44437;
-  background: #4679BD;
+  background: #4679bd;
   box-shadow: 0 0 3px gray;
   background: linear-gradient(to bottom, #991e1e 0%, #e51616 100%); /* W3C */
   animation-iteration-count: 1;
   animation-name: move-piece;
-  animation-duration: .3s;
+  animation-duration: 0.3s;
 }
 
 .yellow {
   height: 92%;
   width: 100%;
-  border-radius:50%;
-  border: 2px solid #FFF59D;
-  background: #4679BD;
+  border-radius: 50%;
+  border: 2px solid #fff59d;
+  background: #4679bd;
   box-shadow: 0 0 3px gray;
-  background: linear-gradient(to bottom, #FBC02D 0%, #f2e78a 100%);
+  background: linear-gradient(to bottom, #fbc02d 0%, #f2e78a 100%);
   animation-iteration-count: 1;
   animation-name: move-piece;
-  animation-duration: .3s;
+  animation-duration: 0.3s;
 }
-
 
 .red.winner {
   border-color: white;
   box-shadow: 0 0 20px white;
-  transition: all .5s;
+  transition: all 0.5s;
 }
 
 .yellow.winner {
   border-color: white;
   box-shadow: 0 0 20px white;
-  transition: all .5s;
+  transition: all 0.5s;
 }
 
 .column {
@@ -128,7 +126,6 @@ h1 {
   opacity: 0.7;
 }
 
-
 .scoreboard {
   width: 180px;
   margin-left: 30px;
@@ -138,7 +135,7 @@ h1 {
   padding: 20px;
   text-shadow: none;
   text-align: center;
-  font-weight:bold;
+  font-weight: bold;
   color: #dcc70f;
   word-break: break-all;
 
@@ -184,7 +181,7 @@ h1 {
   border-color: #991e1e;
 }
 .modal input:focus.yellow-input {
-  border-color: #FBC02D;
+  border-color: #fbc02d;
 }
 
 .modal .btn-start {
@@ -214,7 +211,6 @@ h1 {
   pointer-events: auto; }
 .modal-back, .modal {
   transition: all 0.25s ease; }*/
-
 
 button {
   border-radius: 20px;
@@ -287,8 +283,12 @@ footer img {
 }
 
 @keyframes move-cloud1 {
-    from {left: -200px;}
-    to {left: calc(100vw + 10vw);}
+  from {
+    left: -200px;
+  }
+  to {
+    left: calc(100vw + 10vw);
+  }
 }
 
 #cloud2 {
@@ -305,13 +305,20 @@ footer img {
 }
 
 @keyframes move-cloud2 {
-    from {right: -250px;}
-    to {right: calc(100vw + 15vw);}
+  from {
+    right: -250px;
+  }
+  to {
+    right: calc(100vw + 15vw);
+  }
 }
 
 @keyframes move-piece {
-    from {transform: translateY(-500px);}
-    to {transform: translateY(0px);
+  from {
+    transform: translateY(-500px);
+  }
+  to {
+    transform: translateY(0px);
   }
 }
 
@@ -322,7 +329,6 @@ footer img {
 }
 
 @media (max-width: 550px) {
-
   .board {
     height: 350px;
     width: 400px;
@@ -334,7 +340,6 @@ footer img {
     width: 40px;
     margin: 10px 5px;
   }
-
 }
 
 @media (max-width: 414px) {
