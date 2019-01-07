@@ -1,42 +1,16 @@
+import { gameStatus } from "../gameLogic";
 import {
   UPDATE_USERS_NAMES,
   UPDATE_ROW,
   RESET_GAME,
   NEW_GAME
 } from "../actions";
-import { gameStatus } from "../gameLogic";
-
-function createEmptyBoard() {
-  let board = [];
-  for (let i = 0; i < 7; i++) {
-    let col = [];
-    for (let j = 0; j < 6; j++) {
-      col.push(null);
-    }
-    board.push(col);
-  }
-  return board;
-}
-
-function switchTurn(turn) {
-  return turn === "r" ? "y" : "r";
-}
-
-function isRowAvailable(row) {
-  if (row.indexOf(null) !== -1) return true;
-  return false;
-}
-
-function addPieceToRow(row, player) {
-  let i = row.length - 1;
-  for (i; i >= 0; i--) {
-    if (row[i] === null) {
-      row[i] = player;
-      break;
-    }
-  }
-  return row;
-}
+import {
+  createEmptyBoard,
+  switchTurn,
+  isRowAvailable,
+  addPieceToRow
+} from "../helpers";
 
 const initialState = {
   player1: {
@@ -57,7 +31,8 @@ const initialState = {
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case UPDATE_USERS_NAMES:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         player1: {
           name: action.users.player1,
           score: 0
@@ -67,7 +42,7 @@ const rootReducer = (state = initialState, action) => {
           score: 0
         },
         isModalOpen: false
-      });
+      };
 
     case UPDATE_ROW:
       let rowIndex = action.row;
@@ -77,12 +52,13 @@ const rootReducer = (state = initialState, action) => {
         let newRow = addPieceToRow(row, state.turn);
         let newBoard = state.board.slice(0);
         newBoard[rowIndex] = newRow;
-        return Object.assign({}, state, {
+        return {
+          ...state,
           board: newBoard,
           turn: switchTurn(state.turn),
           status: gameStatus(state.board).status,
           winnerPosition: gameStatus(state.board).position
-        });
+        };
       } else {
         return state;
       }
