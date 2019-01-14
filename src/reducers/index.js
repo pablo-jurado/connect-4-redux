@@ -3,7 +3,8 @@ import {
   UPDATE_USERS_NAMES,
   UPDATE_ROW,
   RESET_GAME,
-  NEW_GAME
+  NEW_GAME,
+  TOGGLE_MODAL
 } from "../actions";
 import {
   createEmptyBoard,
@@ -40,8 +41,13 @@ const rootReducer = (state = initialState, action) => {
         player2: {
           name: action.users.player2,
           score: 0
-        },
-        isModalOpen: false
+        }
+      };
+
+    case TOGGLE_MODAL:
+      return {
+        ...state,
+        isModalOpen: action.isOpen
       };
 
     case UPDATE_ROW:
@@ -76,8 +82,7 @@ const rootReducer = (state = initialState, action) => {
         status: "in_progress",
         winnerPosition: null,
         turn: "r",
-        board: createEmptyBoard(),
-        isModalOpen: true
+        board: createEmptyBoard()
       };
 
     case NEW_GAME:

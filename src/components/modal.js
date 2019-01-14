@@ -1,5 +1,5 @@
 import React from "react";
-import { updateUsersNames } from "../actions";
+import { updateUsersNames, toggleModal } from "../actions";
 import { connect } from "react-redux";
 
 class Modal extends React.Component {
@@ -13,6 +13,8 @@ class Modal extends React.Component {
 
   handleClick = () => {
     this.props.handleClick(this.state);
+    this.props.toggleModal(false);
+
     this.setState({
       player1: "Red",
       player2: "Yellow"
@@ -66,7 +68,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  handleClick: (users) => dispatch(updateUsersNames(users))
+  handleClick: (users) => dispatch(updateUsersNames(users)),
+  toggleModal: (isOpen) => dispatch(toggleModal(isOpen))
 });
 
 export default connect(
