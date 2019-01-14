@@ -1,5 +1,5 @@
 import React from "react";
-import { updateUsersNames, toggleModal } from "../actions";
+import { updatePlayersNames, toggleModal } from "../actions";
 import { connect } from "react-redux";
 
 class Modal extends React.Component {
@@ -63,12 +63,12 @@ class Modal extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    isModalOpen: state.isModalOpen
+    isModalOpen: state.game.isModalOpen
   };
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  handleClick: (users) => dispatch(updateUsersNames(users)),
+  handleClick: (players) => dispatch(updatePlayersNames(players)),
   toggleModal: (isOpen) => dispatch(toggleModal(isOpen))
 });
 

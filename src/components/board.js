@@ -50,8 +50,8 @@ function Circle({ item, indexRow, updateRow, winnerPosition }) {
 
 const mapStateToProps = (state) => {
   return {
-    board: state.board,
-    winnerPosition: state.winnerPosition
+    board: state.game.board,
+    winnerPosition: state.game.winnerPosition
   };
 };
 

@@ -1,8 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
-import { newGame } from "../actions";
+import { newGame, updateScore } from "../actions";
 
-const GameStatus = ({ player1, player2, turn, status, newGame }) => {
+const GameStatus = ({
+  player1,
+  player2,
+  turn,
+  status,
+  newGame,
+  updateScore
+}) => {
   return (
     <div>
       <Feedback
@@ -11,33 +18,40 @@ const GameStatus = ({ player1, player2, turn, status, newGame }) => {
         turn={turn}
         status={status}
         newGame={newGame}
+        updateScore={updateScore}
       />
       <ScoreBoard player1={player1} player2={player2} />
     </div>
   );
 };
 
-const Feedback = ({ player1, player2, turn, status, newGame }) => {
+const Feedback = ({ player1, player2, turn, status, newGame, updateScore }) => {
   let message = `Player turn: ${turn === "r" ? "red " : "yellow"}`;
+
+  if (status === "tie") message = `The game is tie`;
   if (status === "winner_red") message = `Winner ${player1.name}`;
   if (status === "winner_yellow") message = `Winner ${player2.name}`;
-  if (status === "tie") message = `The game is tie`;
 
   return (
     <div className="feedback">
       <h1>Connect 4</h1>
       <h2>{message}</h2>
-      <NewGameButton status={status} newGame={newGame} />
+      <NewGameButton
+        status={status}
+        newGame={newGame}
+        updateScore={updateScore}
+      />
     </div>
   );
 };
 
-const NewGameButton = ({ status, newGame }) => {
+const NewGameButton = ({ status, newGame, updateScore }) => {
   if (status === "in_progress") return null;
   return (
     <button
       className="play-again"
       onClick={() => {
+        updateScore(status);
         newGame();
       }}
     >
@@ -61,17 +75,18 @@ const ScoreBoard = ({ player1, player2 }) => (
   </div>
 );
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    player1: state.player1,
-    player2: state.player2,
-    turn: state.turn,
-    status: state.status
+    player1: state.players.player1,
+    player2: state.players.player2,
+    turn: state.game.turn,
+    status: state.game.status
   };
 };
 
-const mapDispatchToProps = dispatch => ({
-  newGame: () => dispatch(newGame())
+const mapDispatchToProps = (dispatch) => ({
+  newGame: () => dispatch(newGame()),
+  updateScore: (status) => dispatch(updateScore(status))
 });
 
 export default connect(

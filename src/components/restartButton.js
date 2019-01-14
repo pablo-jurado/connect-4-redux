@@ -1,12 +1,13 @@
 import React from "react";
-import { resetGame, toggleModal } from "../actions";
+import { resetGame, resetPlayers, toggleModal } from "../actions";
 import { connect } from "react-redux";
 
-const RestartButton = ({ resetGame, toggleModal }) => (
+const RestartButton = ({ resetGame, toggleModal, resetPlayers }) => (
   <button
     className="restart"
     onClick={() => {
       resetGame();
+      resetPlayers();
       toggleModal(true);
     }}
   >
@@ -16,6 +17,7 @@ const RestartButton = ({ resetGame, toggleModal }) => (
 
 const mapDispatchToProps = (dispatch) => ({
   resetGame: () => dispatch(resetGame()),
+  resetPlayers: () => dispatch(resetPlayers()),
   toggleModal: (isOpen) => dispatch(toggleModal(isOpen))
 });
 
