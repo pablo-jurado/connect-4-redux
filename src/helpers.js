@@ -29,3 +29,13 @@ export function addPieceToRow(row, player) {
   }
   return row;
 }
+
+export function saveState(state) {
+  localStorage.setItem("state", JSON.stringify(state));
+}
+
+export function getSavedState() {
+  const state = localStorage.getItem("state");
+  if (state === null) return undefined;
+  return JSON.parse(state);
+}

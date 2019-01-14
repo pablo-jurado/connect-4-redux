@@ -6,12 +6,15 @@ import * as serviceWorker from "./serviceWorker";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
 import rootReducer from "./reducers";
+import { saveState, getSavedState } from "./helpers";
 
-const store = createStore(rootReducer);
+const savedState = getSavedState();
 
-// store.subscribe(() => {
-//   console.log(store.getState());
-// });
+const store = createStore(rootReducer, savedState);
+
+store.subscribe(() => {
+  saveState(store.getState());
+});
 
 ReactDOM.render(
   <Provider store={store}>
